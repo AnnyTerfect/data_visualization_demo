@@ -15,16 +15,16 @@ function connect() {
 }
 
 function query(conn, sql) {
-	conn.query(sql,function (err, result) {
+	conn.query(sql, function (err, result) {
         if(err){
-          console.log('[SELECT ERROR] - ',err.message);
-          return;
+          console.log('[SELECT ERROR] - ', err.message)
+          return
         }
  
-       console.log('--------------------------SELECT----------------------------');
-       console.log(result);
-       console.log('------------------------------------------------------------\n\n');  
-	});
+       console.log('--------------------------SELECT----------------------------')
+       console.log(result)
+       console.log('------------------------------------------------------------\n\n')
+	})
 }
 
 function saveData(conn, ip, table) {
@@ -50,7 +50,7 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
     res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8")
-    next();
+    next()
 })
 
 app.post('/api/post', function (req, res) {
@@ -63,13 +63,13 @@ app.post('/api/post', function (req, res) {
     req.on('end', function () {
         try {
             table = JSON.parse(body)
-            res.setHeader('Content-Type', 'text/plain');
+            res.setHeader('Content-Type', 'text/plain')
             let conn = connect()
             saveData(conn, req.ip, table)
             res.send({ 'status': 'successful' })
         }
         catch (err) {
-        	res.setHeader('Content-Type', 'text/plain');
+        	res.setHeader('Content-Type', 'text/plain')
             res.send({ 'status': 'error' })
             console.log(err)
         }
